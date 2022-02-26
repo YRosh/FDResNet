@@ -16,4 +16,7 @@
 
 Code inspired [from](https://github.com/kuangliu/pytorch-cifar)
 
-[Paper](https://arxiv.org/pdf/2109.12556.pdf)
+FDResNet paper available on arxiv: [arXiv Paper](https://arxiv.org/pdf/2109.12556.pdf)
+
+If you use FDResNet code in your research, pleasew cite following work:
+S.R. Singh, R.R. Yedla, S.R. Dubey, R. Sanodiya, and W.-T. Chu, "Frequency Disentangled Residual Network", arXiv preprint arXiv:2109.12556, 2021.
