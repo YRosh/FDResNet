@@ -1,4 +1,4 @@
-# FDResNet [arXiv PDF](https://arxiv.org/pdf/2109.12556.pdf)
+# FDResNet [[arXiv PDF]](https://arxiv.org/pdf/2109.12556.pdf)
 
 ### Settings used
 
