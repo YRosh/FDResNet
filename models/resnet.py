@@ -6,56 +6,6 @@ import torch.nn.functional as F
 import random
 
 
-class GaussianSmoothing(nn.Module):
-    def __init__(self, channels, kernel_size=3, sigma=1, dim=2):
-        super(GaussianSmoothing, self).__init__()
-
-        if isinstance(kernel_size, numbers.Number):
-            kernel_size = [kernel_size] * dim
-        if isinstance(sigma, numbers.Number):
-            sigma = [sigma] * dim
-        # sigma = [self.sigma.item()] * dim
-        # The gaussian kernel is the product of the
-        # gaussian function of each dimension.
-        #self.sigma = nn.Parameter(torch.tensor([1.0, 1.0]).cuda(), requires_grad=True)
-        kernel = 1
-        meshgrids = torch.meshgrid(
-            [
-                torch.arange(size, dtype=torch.float32).cuda()
-                for size in kernel_size
-            ]
-        )
-        for size, std, mgrid in zip(kernel_size, sigma, meshgrids):
-            mean = (size - 1) / 2
-            kernel *= 1 / (std * math.sqrt(2 * math.pi)) * \
-                torch.exp(-((mgrid - mean) / std) ** 2 / 2).cuda()
-
-        # Make sure sum of values in gaussian kernel equals 1.
-        kernel = kernel / torch.sum(kernel)
-
-        # Reshape to depthwise convolutional weight
-        kernel = kernel.view(1, 1, *kernel.size())
-        kernel = kernel.repeat(channels, *[1] * (kernel.dim() - 1))
-
-        self.register_buffer('weight', kernel.cuda())
-        self.groups = channels
-
-        if dim == 1:
-            self.conv = F.conv1d
-        elif dim == 2:
-            self.conv = F.conv2d
-        elif dim == 3:
-            self.conv = F.conv3d
-        else:
-            raise RuntimeError(
-                'Only 1, 2 and 3 dimensions are supported. Received {}.'.format(
-                    dim)
-            )
-
-    def forward(self, inputs):
-        return self.conv(inputs, weight=self.weight, groups=self.groups)
-
-
 class BasicBlock(nn.Module):
     expansion = 1
 

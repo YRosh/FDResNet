@@ -15,3 +15,4 @@
 - Adaptive pooling
 
 Code inspired [from](https://github.com/kuangliu/pytorch-cifar)
+[Paper](https://arxiv.org/pdf/2109.12556.pdf)
